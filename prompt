@@ -1,0 +1,102 @@
+**Mortgage Calculator**
+
+**Description:** Create a responsive, user-friendly mortgage calculator app using **Vite** and **Material-UI**. The app should allow users to calculate their monthly mortgage repayments, including a detailed breakdown of principal and interest payments over time. The app should also visualize the repayment schedule through a dynamic graph.
+
+---
+
+**Features to Include:**
+
+### Input Fields:
+
+1. **Property Value**: A field to input the total value of the property.
+    
+    - Label: "Property Value"
+    - Input Type: Number
+    - Unit: Currency (e.g., £ or $)
+2. **Amount to Borrow**: A field for the mortgage amount (loan principal).
+    
+    - Label: "Loan Amount"
+    - Input Type: Number
+    - Unit: Currency
+3. **Mortgage Term (Years)**: A field for the number of years to repay the mortgage.
+    
+    - Label: "Mortgage Term (Years)"
+    - Input Type: Number
+4. **Interest Rate (%)**: A field for the annual interest rate.
+    
+    - Label: "Interest Rate (%)"
+    - Input Type: Number
+
+### Outputs:
+
+1. **Monthly Repayments**: The calculated monthly repayment amount.
+    
+    - Display in bold and as a currency value.
+2. **Repayment Breakdown**:
+    
+    - Show the breakdown of **principal** and **interest** components of the repayment.
+3. **Graph**:
+    
+    - A **line graph** visualizing the change in principal and interest components over the term of the mortgage.
+    - X-Axis: Time (Years)
+    - Y-Axis: Payment Amount (Principal and Interest)
+    - Series:
+        - Principal Payments
+        - Interest Payments
+
+### Functionalities:
+
+- Calculate the monthly repayments using the **amortization formula**.
+- Dynamically update the breakdown and graph based on user input.
+- Display an error if input values are invalid (e.g., negative numbers, zero, or blank fields).
+
+---
+
+**Technology Stack:**
+
+1. **Frontend Framework**: React (via Vite)
+2. **UI Library**: Material-UI
+3. **Graphing Library**: `chart.js` or `recharts`
+
+---
+
+### **Steps to Build the App:**
+
+1. **Setup Project:**
+    
+    - Initialize a new Vite project using React.
+    - Install Material-UI and the graphing library (`chart.js` or `recharts`).
+2. **Create Components:**
+    
+    - **InputForm**: A form for collecting user input fields with Material-UI `TextField` components.
+    - **ResultsDisplay**: A section displaying the monthly repayment and breakdown.
+    - **RepaymentGraph**: A chart component to display the repayment breakdown over time.
+3. **Implement Logic:**
+    
+    - Write a function to calculate monthly repayments using the formula: M=P×r(1+r)n(1+r)n−1M = P \times \frac{r(1+r)^n}{(1+r)^n-1} Where:
+        - MM = Monthly repayment
+        - PP = Loan amount
+        - rr = Monthly interest rate (annual rate/12\text{annual rate} / 12)
+        - nn = Total number of payments (years×12\text{years} \times 12)
+    - Calculate the yearly breakdown of principal and interest.
+4. **Graph Implementation:**
+    
+    - Use `chart.js` or `recharts` to plot the principal and interest amounts for each year.
+5. **Styling:**
+    
+    - Use Material-UI `Box`, `Card`, and `Typography` components for a clean layout.
+    - Ensure the app is responsive.
+
+---
+
+### Example Output:
+
+- **Monthly Repayment**: £1,200
+- **Breakdown**:
+    - Month 1: £800 Principal, £400 Interest
+    - Month 2: £805 Principal, £395 Interest
+    - ...
+- **Graph**:
+    - The graph should show the principal starting low and increasing, while interest payments decrease over time.
+
+Dev platform Windows 10
