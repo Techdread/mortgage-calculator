@@ -16,7 +16,7 @@ function App() {
   });
 
   const handleCalculate = (formData) => {
-    const { loanAmount, interestRate, mortgageTerm } = formData;
+    const { loanAmount, interestRate, mortgageTerm, monthlyOverpayment } = formData;
     const monthlyPayment = calculateMortgage(
       Number(loanAmount),
       Number(interestRate),
@@ -26,16 +26,18 @@ function App() {
     const schedule = generateRepaymentSchedule(
       Number(loanAmount),
       Number(interestRate),
-      Number(mortgageTerm)
+      Number(mortgageTerm),
+      Number(monthlyOverpayment)
     );
 
-    const totalAmount = monthlyPayment * Number(mortgageTerm) * 12;
-    const totalInterest = totalAmount - Number(loanAmount);
+    const totalPayments = schedule.reduce((acc, year) => {
+      return acc + year.principal + year.interest;
+    }, 0);
 
     setResults({
       monthlyPayment,
-      totalInterest,
-      totalAmount,
+      totalInterest: totalPayments - Number(loanAmount),
+      totalAmount: totalPayments,
       schedule
     });
   };

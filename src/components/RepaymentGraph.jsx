@@ -11,15 +11,33 @@ import {
 } from 'recharts';
 
 const RepaymentGraph = ({ data }) => {
+  // Format data for better visualization
+  const formattedData = data.map(item => ({
+    ...item,
+    year: `Year ${item.year}`,
+    principal: Number(item.principal.toFixed(2)),
+    interest: Number(item.interest.toFixed(2)),
+    balance: Number(item.balance.toFixed(2))
+  }));
+
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
   return (
-    <Card elevation={3} sx={{ mt: 2, height: 400 }}>
+    <Card elevation={3} sx={{ mt: 2, minHeight: 400, p: 2 }}>
       <CardContent>
         <Typography variant="h6" gutterBottom>
           Repayment Schedule
         </Typography>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height={350}>
           <LineChart
-            data={data}
+            data={formattedData}
             margin={{
               top: 5,
               right: 30,
@@ -28,26 +46,48 @@ const RepaymentGraph = ({ data }) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="year" />
-            <YAxis />
-            <Tooltip 
-              formatter={(value) => new Intl.NumberFormat('en-GB', {
-                style: 'currency',
-                currency: 'GBP'
-              }).format(value)}
+            <XAxis 
+              dataKey="year"
+              tick={{ fontSize: 12 }}
             />
-            <Legend />
+            <YAxis 
+              tickFormatter={formatCurrency}
+              tick={{ fontSize: 12 }}
+            />
+            <Tooltip 
+              formatter={(value, name) => [formatCurrency(value), name]}
+              labelStyle={{ fontSize: 14 }}
+              contentStyle={{ fontSize: 14 }}
+            />
+            <Legend 
+              wrapperStyle={{ fontSize: 14 }}
+            />
             <Line
               type="monotone"
               dataKey="principal"
-              stroke="#8884d8"
+              stroke="#2196f3"
+              strokeWidth={2}
               name="Principal"
+              dot={{ r: 1 }}
+              activeDot={{ r: 5 }}
             />
             <Line
               type="monotone"
               dataKey="interest"
-              stroke="#82ca9d"
+              stroke="#4caf50"
+              strokeWidth={2}
               name="Interest"
+              dot={{ r: 1 }}
+              activeDot={{ r: 5 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="balance"
+              stroke="#ff9800"
+              strokeWidth={2}
+              name="Remaining Balance"
+              dot={{ r: 1 }}
+              activeDot={{ r: 5 }}
             />
           </LineChart>
         </ResponsiveContainer>

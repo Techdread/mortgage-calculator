@@ -6,16 +6,20 @@ const InputForm = ({ onCalculate }) => {
     propertyValue: '',
     loanAmount: '',
     mortgageTerm: '',
-    interestRate: ''
+    interestRate: '',
+    monthlyOverpayment: '0'
   });
 
   const [errors, setErrors] = useState({});
 
   const validateField = (name, value) => {
     if (value === '') return 'This field is required';
-    if (value <= 0) return 'Value must be greater than 0';
+    if (value < 0) return 'Value must be greater than or equal to 0';
     if (name === 'mortgageTerm' && !Number.isInteger(Number(value))) {
       return 'Must be a whole number';
+    }
+    if (name === 'monthlyOverpayment' && value < 0) {
+      return 'Overpayment must be positive';
     }
     return '';
   };
@@ -50,7 +54,10 @@ const InputForm = ({ onCalculate }) => {
               onChange={handleChange}
               error={!!errors.propertyValue}
               helperText={errors.propertyValue}
-              InputProps={{ startAdornment: '£' }}
+              InputProps={{ 
+                startAdornment: '£',
+                inputProps: { step: 10000 }
+              }}
             />
             <TextField
               label="Loan Amount"
@@ -60,7 +67,10 @@ const InputForm = ({ onCalculate }) => {
               onChange={handleChange}
               error={!!errors.loanAmount}
               helperText={errors.loanAmount}
-              InputProps={{ startAdornment: '£' }}
+              InputProps={{ 
+                startAdornment: '£',
+                inputProps: { step: 10000 }
+              }}
             />
           </div>
           <div>
@@ -82,6 +92,21 @@ const InputForm = ({ onCalculate }) => {
               error={!!errors.interestRate}
               helperText={errors.interestRate}
               InputProps={{ endAdornment: '%' }}
+            />
+          </div>
+          <div>
+            <TextField
+              label="Monthly Overpayment"
+              name="monthlyOverpayment"
+              type="number"
+              value={formData.monthlyOverpayment}
+              onChange={handleChange}
+              error={!!errors.monthlyOverpayment}
+              helperText={errors.monthlyOverpayment}
+              InputProps={{ 
+                startAdornment: '£',
+                inputProps: { step: 100 }
+              }}
             />
           </div>
         </Box>
