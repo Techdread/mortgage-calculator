@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Box } from '@mui/material';
+import { Card, CardContent, Box } from '@mui/material';
 import {
   LineChart,
   Line,
@@ -44,14 +44,11 @@ const RepaymentGraph = ({ data, propertyValue }) => {
     : formattedData[formattedData.length - 1].balance;
 
   return (
-    <Card elevation={3} sx={{ mt: 2, minHeight: 400, p: 2 }}>
+    <Card elevation={3}>
       <CardContent>
-        <Typography variant="h6" gutterBottom>
-          Repayment Schedule
-        </Typography>
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-          <Box sx={{ flexGrow: 1, minWidth: 300 }}>
-            <ResponsiveContainer width="100%" height={350}>
+          <Box sx={{ flexGrow: 1, minWidth: 150, height: 250 }}>
+            <ResponsiveContainer>
               <LineChart
                 data={formattedData}
                 margin={{
@@ -65,11 +62,12 @@ const RepaymentGraph = ({ data, propertyValue }) => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="year"
-                  tick={{ fontSize: 12 }}
+                  tick={{ fontSize: 10 }}
+                  interval={2}
                 />
                 <YAxis
                   tickFormatter={formatCurrency}
-                  tick={{ fontSize: 12 }}
+                  tick={{ fontSize: 10 }}
                 />
                 <Tooltip 
                   formatter={(value) => formatCurrency(value)}
@@ -80,27 +78,27 @@ const RepaymentGraph = ({ data, propertyValue }) => {
                   dataKey="balance"
                   stroke="#8884d8"
                   name="Outstanding Balance"
+                  dot={false}
                 />
                 <Line
                   type="monotone"
                   dataKey="principal"
                   stroke="#82ca9d"
                   name="Principal Paid"
+                  dot={false}
                 />
                 <Line
                   type="monotone"
                   dataKey="interest"
                   stroke="#ffc658"
                   name="Interest Paid"
+                  dot={false}
                 />
               </LineChart>
             </ResponsiveContainer>
           </Box>
           {propertyValue > 0 && (
-            <Box sx={{ width: 300 }}>
-              <Typography variant="subtitle1" gutterBottom align="center">
-                Property Equity - Year {selectedYear + 1}
-              </Typography>
+            <Box sx={{ width: '100%', maxWidth: 200, alignSelf: 'center' }}>
               <EquityPieChart 
                 propertyValue={propertyValue} 
                 outstandingLoan={currentBalance} 
