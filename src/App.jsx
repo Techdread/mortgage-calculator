@@ -15,11 +15,13 @@ function App() {
     totalAmount: 0,
     schedule: [],
     originalTerm: 0,
-    newTermMonths: 0
+    newTermMonths: 0,
+    propertyValue: 0,
+    loanAmount: 0
   });
 
   const handleCalculate = (formData) => {
-    const { loanAmount, interestRate, mortgageTerm, monthlyOverpayment } = formData;
+    const { loanAmount, interestRate, mortgageTerm, monthlyOverpayment, propertyValue } = formData;
     const monthlyPayment = calculateMortgage(
       Number(loanAmount),
       Number(interestRate),
@@ -49,26 +51,24 @@ function App() {
       totalAmount: totalPayments,
       schedule,
       originalTerm: Number(mortgageTerm),
-      newTermMonths: hasOverpayment ? actualTermMonths : Number(mortgageTerm) * 12
+      newTermMonths: hasOverpayment ? actualTermMonths : Number(mortgageTerm) * 12,
+      propertyValue: Number(propertyValue),
+      loanAmount: Number(loanAmount)
     });
   };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="md" sx={{ py: 4 }}>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
         <InputForm onCalculate={handleCalculate} />
         {results.monthlyPayment > 0 && (
           <>
-            <ResultsDisplay
-              monthlyPayment={results.monthlyPayment}
-              totalMonthlyPayment={results.totalMonthlyPayment}
-              totalInterest={results.totalInterest}
-              totalAmount={results.totalAmount}
-              originalTerm={results.originalTerm}
-              newTermMonths={results.newTermMonths}
+            <ResultsDisplay {...results} />
+            <RepaymentGraph 
+              data={results.schedule} 
+              propertyValue={results.propertyValue}
             />
-            <RepaymentGraph data={results.schedule} />
           </>
         )}
       </Container>

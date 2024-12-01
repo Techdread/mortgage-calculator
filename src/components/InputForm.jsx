@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, TextField, Card, CardContent, Typography } from '@mui/material';
+import { Box, TextField, Card, CardContent, Typography, Grid, InputAdornment } from '@mui/material';
 
 const InputForm = ({ onCalculate }) => {
   const [formData, setFormData] = useState({
@@ -45,70 +45,78 @@ const InputForm = ({ onCalculate }) => {
           Mortgage Calculator
         </Typography>
         <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}>
-          <div>
-            <TextField
-              label="Property Value"
-              name="propertyValue"
-              type="number"
-              value={formData.propertyValue}
-              onChange={handleChange}
-              error={!!errors.propertyValue}
-              helperText={errors.propertyValue}
-              InputProps={{ 
-                startAdornment: '£',
-                inputProps: { step: 10000 }
-              }}
-            />
-            <TextField
-              label="Loan Amount"
-              name="loanAmount"
-              type="number"
-              value={formData.loanAmount}
-              onChange={handleChange}
-              error={!!errors.loanAmount}
-              helperText={errors.loanAmount}
-              InputProps={{ 
-                startAdornment: '£',
-                inputProps: { step: 10000 }
-              }}
-            />
-          </div>
-          <div>
-            <TextField
-              label="Mortgage Term (Years)"
-              name="mortgageTerm"
-              type="number"
-              value={formData.mortgageTerm}
-              onChange={handleChange}
-              error={!!errors.mortgageTerm}
-              helperText={errors.mortgageTerm}
-            />
-            <TextField
-              label="Interest Rate (%)"
-              name="interestRate"
-              type="number"
-              value={formData.interestRate}
-              onChange={handleChange}
-              error={!!errors.interestRate}
-              helperText={errors.interestRate}
-              InputProps={{ endAdornment: '%' }}
-            />
-          </div>
-          <div>
-            <TextField
-              label="Monthly Overpayment"
-              name="monthlyOverpayment"
-              type="number"
-              value={formData.monthlyOverpayment}
-              onChange={handleChange}
-              error={!!errors.monthlyOverpayment}
-              helperText={errors.monthlyOverpayment}
-              InputProps={{ 
-                startAdornment: '£',
-                inputProps: { step: 100 }
-              }}
-            />
-          </div>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Property Value"
+                name="propertyValue"
+                type="number"
+                value={formData.propertyValue}
+                onChange={handleChange}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">£</InputAdornment>,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Loan Amount"
+                name="loanAmount"
+                type="number"
+                value={formData.loanAmount}
+                onChange={handleChange}
+                error={!!errors.loanAmount}
+                helperText={errors.loanAmount}
+                InputProps={{ 
+                  startAdornment: '£',
+                  inputProps: { step: 10000 }
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Mortgage Term (Years)"
+                name="mortgageTerm"
+                type="number"
+                value={formData.mortgageTerm}
+                onChange={handleChange}
+                error={!!errors.mortgageTerm}
+                helperText={errors.mortgageTerm}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Interest Rate (%)"
+                name="interestRate"
+                type="number"
+                value={formData.interestRate}
+                onChange={handleChange}
+                error={!!errors.interestRate}
+                helperText={errors.interestRate}
+                InputProps={{ endAdornment: '%' }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Monthly Overpayment"
+                name="monthlyOverpayment"
+                type="number"
+                value={formData.monthlyOverpayment}
+                onChange={handleChange}
+                error={!!errors.monthlyOverpayment}
+                helperText={errors.monthlyOverpayment}
+                InputProps={{ 
+                  startAdornment: '£',
+                  inputProps: { step: 100 }
+                }}
+              />
+            </Grid>
+          </Grid>
         </Box>
       </CardContent>
     </Card>

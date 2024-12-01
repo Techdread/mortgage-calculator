@@ -1,6 +1,13 @@
 import { Card, CardContent, Typography, Box, Divider } from '@mui/material';
 
-const ResultsDisplay = ({ monthlyPayment, totalMonthlyPayment, totalInterest, totalAmount, originalTerm, newTermMonths }) => {
+const ResultsDisplay = ({ 
+  monthlyPayment, 
+  totalMonthlyPayment, 
+  totalInterest, 
+  totalAmount, 
+  originalTerm, 
+  newTermMonths
+}) => {
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
@@ -8,29 +15,32 @@ const ResultsDisplay = ({ monthlyPayment, totalMonthlyPayment, totalInterest, to
     }).format(value);
   };
 
+  const formatTermDuration = (months) => {
+    const years = Math.floor(months / 12);
+    const remainingMonths = months % 12;
+    
+    if (years === 0) return `${remainingMonths} months`;
+    if (remainingMonths === 0) return `${years} years`;
+    return `${years} years and ${remainingMonths} months`;
+  };
+
   const calculateTermReduction = () => {
     if (!newTermMonths || newTermMonths >= originalTerm * 12) return null;
     
     const originalMonths = originalTerm * 12;
-    // Ensure term reduction cannot exceed original term
     const monthsSaved = Math.min(originalMonths - newTermMonths, originalMonths);
     
     // If monthly payment (including overpayment) is less than required, no term reduction is possible
     if (totalMonthlyPayment < monthlyPayment) return null;
     
-    const yearsSaved = Math.floor(monthsSaved / 12);
-    const remainingMonths = monthsSaved % 12;
-    
-    const newEndDate = new Date();
-    newEndDate.setMonth(newEndDate.getMonth() + newTermMonths);
-    
     return {
-      yearsSaved,
-      remainingMonths,
-      endDate: newEndDate.toLocaleDateString('en-GB', { 
-        month: 'long',
-        year: 'numeric'
-      })
+      termSaved: formatTermDuration(monthsSaved),
+      newTerm: formatTermDuration(newTermMonths),
+      endDate: new Date(Date.now() + (newTermMonths * 30.44 * 24 * 60 * 60 * 1000)) 
+        .toLocaleDateString('en-GB', { 
+          month: 'long',
+          year: 'numeric'
+        })
     };
   };
 
@@ -68,6 +78,9 @@ const ResultsDisplay = ({ monthlyPayment, totalMonthlyPayment, totalInterest, to
           <Typography variant="body1">
             Total Amount: {formatCurrency(totalAmount)}
           </Typography>
+          <Typography variant="body1">
+            Original Term: {formatTermDuration(originalTerm * 12)}
+          </Typography>
         </Box>
 
         {termReduction && (
@@ -80,8 +93,10 @@ const ResultsDisplay = ({ monthlyPayment, totalMonthlyPayment, totalInterest, to
               Mortgage will be paid off by: {termReduction.endDate}
             </Typography>
             <Typography variant="body1" color="success.main">
-              Term reduced by: {termReduction.yearsSaved} years
-              {termReduction.remainingMonths > 0 && ` and ${termReduction.remainingMonths} months`}
+              New mortgage term: {termReduction.newTerm}
+            </Typography>
+            <Typography variant="body1" color="success.main">
+              Term reduced by: {termReduction.termSaved}
             </Typography>
           </>
         )}
