@@ -1,6 +1,6 @@
 # Mortgage Calculator
 
-A modern, responsive mortgage calculator built with React, Vite, and Material-UI. This application helps users calculate their monthly mortgage payments and visualize their repayment schedule over time.
+A modern, responsive mortgage calculator built with React, Vite, and Material-UI. This application helps users calculate their monthly mortgage payments, visualize their repayment schedule, and understand the impact of overpayments on their mortgage term.
 
 ## Features
 
@@ -9,15 +9,27 @@ A modern, responsive mortgage calculator built with React, Vite, and Material-UI
   - Loan Amount
   - Mortgage Term (Years)
   - Interest Rate
+  - Monthly Overpayment Amount
   - Real-time validation
 
-- **Detailed Results**
-  - Monthly Payment Amount
+- **Comprehensive Results Display**
+  - Base Monthly Payment
+  - Total Monthly Payment (including overpayment)
   - Total Interest
   - Total Amount to be Paid
+  - Term Reduction Details
+  - Expected Completion Date
 
-- **Visual Repayment Schedule**
-  - Interactive line graph showing principal vs interest over time
+- **Visual Repayment Schedules**
+  - Side-by-side comparison of standard vs overpayment schedules
+  - Interactive line graphs showing:
+    - Outstanding Balance
+    - Principal Paid
+    - Interest Paid
+  - Dynamic equity pie charts showing:
+    - Property equity vs outstanding loan
+    - Updates as you move through the repayment timeline
+  - Interest savings calculation
   - Year-by-year breakdown
   - Responsive design
 
@@ -57,16 +69,24 @@ A modern, responsive mortgage calculator built with React, Vite, and Material-UI
 
 ## Usage
 
-1. Enter your property details in the input form:
+1. Enter your mortgage details in the input form:
    - Input the total property value
    - Specify the loan amount you wish to borrow
    - Set the mortgage term in years
    - Enter the annual interest rate
+   - (Optional) Add a monthly overpayment amount
 
 2. The calculator will automatically:
    - Calculate your monthly payments
    - Show the total interest you'll pay
-   - Display a graph of your repayment schedule
+   - Display your potential savings with overpayments
+   - Show how much earlier you could pay off your mortgage
+   - Visualize your equity growth over time
+
+3. Interactive Features:
+   - Hover over the repayment graphs to see detailed information for each year
+   - Compare standard repayment vs overpayment scenarios
+   - View dynamic equity breakdown at any point in the mortgage term
 
 ## Build for Production
 
