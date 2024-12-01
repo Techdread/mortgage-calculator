@@ -47,7 +47,7 @@ const RepaymentGraph = ({ data, propertyValue }) => {
     <Card elevation={3}>
       <CardContent>
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-          <Box sx={{ flexGrow: 1, minWidth: 150, height: 250 }}>
+          <Box sx={{ width: '66.67%', minWidth: 150, height: 250 }}>
             <ResponsiveContainer>
               <LineChart
                 data={formattedData}
@@ -62,8 +62,8 @@ const RepaymentGraph = ({ data, propertyValue }) => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="year"
-                  tick={{ fontSize: 10 }}
-                  interval={2}
+                  interval={1}
+                  tick={{ fontSize: 12 }}
                 />
                 <YAxis
                   tickFormatter={formatCurrency}

@@ -11,15 +11,15 @@ const EquityPieChart = ({ propertyValue, outstandingLoan }) => {
   const COLORS = ['#4caf50', '#f44336']; // Green for equity, Red for loan
 
   return (
-    <div style={{ width: '100%', height: 250 }}>
+    <div style={{ width: '400px', minWidth: '300px', height: 225 }}>
       <ResponsiveContainer>
-        <PieChart margin={{ top: 10, right: 30, bottom: 20, left: 30 }}>
+        <PieChart margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
           <Pie
             data={data}
             cx="50%"
             cy="50%"
-            innerRadius={30}
-            outerRadius={50}
+            innerRadius={45}
+            outerRadius={80}
             fill="#8884d8"
             paddingAngle={5}
             dataKey="value"
