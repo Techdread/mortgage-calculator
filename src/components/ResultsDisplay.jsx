@@ -12,7 +12,12 @@ const ResultsDisplay = ({ monthlyPayment, totalMonthlyPayment, totalInterest, to
     if (!newTermMonths || newTermMonths >= originalTerm * 12) return null;
     
     const originalMonths = originalTerm * 12;
-    const monthsSaved = originalMonths - newTermMonths;
+    // Ensure term reduction cannot exceed original term
+    const monthsSaved = Math.min(originalMonths - newTermMonths, originalMonths);
+    
+    // If monthly payment (including overpayment) is less than required, no term reduction is possible
+    if (totalMonthlyPayment < monthlyPayment) return null;
+    
     const yearsSaved = Math.floor(monthsSaved / 12);
     const remainingMonths = monthsSaved % 12;
     
